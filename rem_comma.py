@@ -6,12 +6,6 @@ import random
 import os, sys
 import re
 
-BASEROOT = os.getcwd()
-base = os.path.dirname(os.path.realpath(BASEROOT))
-sys.path.append(base)
-
-root_path = '/home/gl/workspace/xyspcs/WebRoot/'
-
 js_file_pattern = re.compile('(.)*.jsp$')
 
 js_pattern = re.compile('(,\s*})|(,\s*])')
@@ -32,9 +26,11 @@ js_file_list = []
 #===============================遍历项目文件===========================================
 
 def main():
-    tranverse()
+    if(len(sys.argv))==0:
+        scan_path = sys.argv[1]
+        tranverse(scan_path)
 
-def tranverse():
+def tranverse(root_path):
     for dirname, dirnames, filenames in os.walk(root_path):
         for filename in filenames:
             _filename = os.path.abspath(os.path.join(dirname, filename))
